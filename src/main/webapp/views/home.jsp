@@ -1,22 +1,40 @@
+<%@ page import="java.util.Date" %>
 <%@ page language="java"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
-<c:set var="root" value="${pageContext.request.contextPath}" />
-<html>
+<%
+	String contextPath = request.getContextPath();
+	/* Object originalUri = request.getAttribute("javax.servlet.forward.request_uri");
+	String screenId = null;
+	if(originalUri != null) {
+		int beginIndex = ((String)originalUri).lastIndexOf("/");
+		int endIndex = ((String)originalUri).lastIndexOf(".");
+		screenId = ((String)originalUri).substring(beginIndex + 1, endIndex);
+	} */
+	// JSP code
+	long ts = (new Date()).getTime(); // Used to prevent JS/CSS Cashing
+%>
+<!DOCTYPE HTML> 
+<html lang="ko">
 <head>
+	<meta charset="uft-8">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="X-UA-Compatible" content="IE-Edge"/>
 	<title>Home</title>
-	<link rel="stylesheet" type="text/css" href="${root}/resources/css/jqGrid/ui.jqgrid.css"/>
-	<link rel="stylesheet" type="text/css" href="${root}/resources/css/jqGrid/jquery-ui.css"/>
-	<link rel="stylesheet" type="text/css" href="${root}/resources/css/jqGrid/multi-select.css"/>
+	<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/jqGrid/ui.jqgrid.css?<%=ts%>"/>
+	<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/jqGrid/jquery-ui.css?"<%=ts%>/>
+	<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/jqGrid/multi-select.css?<%=ts%>"/>
 	
-	<link rel="stylesheet" type="text/css" href="${root}/resources/css/jqGrid/ui.jqgrid-bootstrap.css"/>
-	<link rel="stylesheet" type="text/css" href="${root}/resources/css/jqGrid/ui.jqgrid-bootstrap4.css"/>
-	<link rel="stylesheet" type="text/css" href="${root}/resources/css/jqGrid/ui.jqgrid-bootstrap-ui.css"/>
+	<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/jqGrid/ui.jqgrid-bootstrap.css?<%=ts%>"/>
+	<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/jqGrid/ui.jqgrid-bootstrap4.css?<%=ts%>"/>
+	<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/jqGrid/ui.jqgrid-bootstrap-ui.css?<%=ts%>"/>
 	
-	<script type="text/javascript" src="${root}/resources/js/jqGrid/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="${root}/resources/js/jqGrid/grid.locale-kr.js"></script>
-	<script type="text/javascript" src="${root}/resources/js/jqGrid/jquery.jqGrid.min.js"></script>
+	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/jquery-1.11.0.min.js?<%=ts%>"></script>
+	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/grid.locale-kr.js?<%=ts%>"></script>
+	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/jquery.jqGrid.min.js?<%=ts%>"></script>
 	
 	<style>
 	    table {
@@ -47,8 +65,6 @@
 		</div>
 	</div>
 </body>
-</html>
-
 <script type="text/javascript">
 //화면 넓이에 따라 그리드 넓이 조절
 
@@ -94,3 +110,6 @@ function goSearch() {
 	alert(JSON.stringify(jsonObj));
 }
 </script>
+
+</html>
+
