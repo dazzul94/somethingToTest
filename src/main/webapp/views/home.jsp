@@ -35,6 +35,7 @@
 	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/jquery-1.11.0.min.js?<%=ts%>"></script>
 	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/grid.locale-kr.js?<%=ts%>"></script>
 	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/jquery.jqGrid.min.js?<%=ts%>"></script>
+	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/jquery-ui.js?<%=ts%>"></script>
 	
 	<script type="text/javascript" src="<%=contextPath%>/js/home.js?<%=ts%>"></script>
 	<style>
@@ -51,19 +52,23 @@
 <P>  The time on the server is ${serverTime}. </P>
 	<div id="row">
 		<div>
-			<select id="selectId">
+			<input type="text" id="fromDate">
+			<input type="text" id="toDate">
+			<select id="selectType">
 				<option value="">전체</option>
 				<option value="A">A</option>
 				<option value="B">B</option>
 				<option value="C">C</option>
 				<option value="D">D</option>
 			</select>
-			<span><a href="#" onclick="javascript:goSearch();">조회</a></span>
+			<input type="text" id="searchVal" placeholder="검색어를 입력해주세요.">
+			<span><a id="btn_search" href="#">조회</a></span>
 		</div>
 		<div>
 			<table id="jqGrid"></table>
 			<div id="jqGridPager"></div>
 		</div>
+		<span><a id="btn_excel" href="#">엑셀다운로드</a></span>
 	</div>
 </body>
 </html>
