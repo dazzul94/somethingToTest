@@ -280,6 +280,136 @@ userdel: user ihduser is currently used vy process 3878
     ❸ kill -9 3878	④ killall -9 3878
 ---
 ##### ＠ killall
+같은 데몬의 여러 프로세스를 한번에 종료시킬 때 사용하는 명령. 프로세스명을 사용한다.
+시그널을 지정하지 않으면 종료 시그널(TERM, SIGTERM)이 전송된다.
 ~~~
 # killall [option] 프로세스명
 ~~~
+- 주요 옵션
+    + -l: 시그널의 종류를 출력한다.(--list)
+    + -w: 시그널을 받은 프로세스들이 종료될 때까지 기다린다.
+    + -v: 시그널이 전송된 결과를 출력한다.(--verbose)
+    + -s signal: 시그널의 이름을 지정하는 옵션.(--signal)
+- 사용 예
+~~~
+# killall httpd
+~~~
+-> Apache 웹 서버 데몬 httpd를 모두 종료한다.
+~~~
+# killall -HUP httpd
+~~~
+-> httpd 데몬을 다시 실행시킨다. 주 데몬이 아닌 웹서비스 요청시 연결을 담당하는 httpd의 프로세스들이 재시작된다.
+~~~
+# killall -v -9 httpd
+~~~
+-> httpd 데몬에 9번시그널(SIGKILL, KILL)을 전송하고, 전송 결과를 출력한다.
+---
+24. 다음 중 동작중인 웹 서버 데몬을 모두 종료 시키는 명령으로 알맞은 것은?  
+    ① kill httpd		❷ killall httpd  
+    ③ nohup httpd	④ signal httpd  
+---
+##### ＠ jobs
+백그라운드로 실행 중인 프로세스나 현재 중지된 프로세스의 목록을 출력한다.
+~~~
+$ jobs [option]
+~~~
+- 주요 옵션
+    + -l: 프로세스 번호(PID)를 추가로 출력해준다.
+
+##### ＠ fg
+백그라운드 프로세스를 포어그라운드 프로세스로 전환하는 명령
+
+##### ＠ bg
+포어그라운드 프로세스를 백그라운드 프로세스로 전환하는 명령
+
+##### ＠ nice
+프로세스의 우선순위를 변경하는 명령. 기본값은 0이고 지정가능한 값은 -20~19. 값이 작을 수록 우선순위가 높다. 일반사용자는 증가만 가능(우선순위 뒤로), root사용자만 감소가능(우선순위 앞으로)
+~~~
+# nice [option] 프로세스명
+~~~
+- 주요옵션
+~~~
+-n 값, -값, --adjustment=값
+~~~
+프로세스에 설정된 NI값에 지정한 NI값을 증감한다. 값을 지정하지 않으면 10으로 지정.
+---
+27. 다음 중 프로세스의 우선순위 변경을 위해 할당할 수 있는 NI값으로 틀린 것은?  
+    ❶ 20		② 0  
+    ③ 1			④ -20  
+---
+##### ＠ renice
+실행 중인 프로세스의 우선순위를 변경할 때 사용하는 명령. nice는 새로운 프로세스를 만들어내지만(프로세스 증가) renice는 기존의 프로세스를 교체하여 조정하기 때문에 nice는 값이 변경되고 renice는 바로 설정된다. nice는 증감으로 표현, renice는 바로 설정되는 값으로 표현
+---
+26. 다음 중 프로세스 증가 없이 우선순위를 조정할 때 사용하는 명령으로 알맞은 것은?  
+    ① nice		② cron  
+    ③ nohup		❹ renice  
+---
+##### ＠ nohup
+사용자가 로그아웃하거나 작업중인 터미널창이 닫혀도 실행중인 프로세스를 백그라운드로 작업될수있게.
+
+#### - 스케쥴링과 con
+##### ＠ 스케쥴링
+특정한 시간에 특정한 작업을 수행하게 하는것. at과 cron을 사용. 모두 데몬으로 실행중에 있어야 한다. at는 한번만 cron은 주기적으로 설정.
+---
+28. 다음 중 지정된 시간에 작업을 예약할 때 사용하는 프로그램의 조합으로 알맞은 것은?  
+    ① at, inetd		② cron, inetd  
+    ❸ cron, at		④ cron, standalone  
+---
+##### ＠ cron
+시스템 운영에 필요한 작업은 /etc/crontab에 등록  
+사용자는 crontab 명령으로 등록할 수 있다.  (분시일달주)
+- crontab 파일의 필드
+    + minute: 분(0~59)
+    + hour: 시(0~23)
+    + day of month: 날(1~31)
+    + month: 달(1~12)
+    + day of week: 주(0~7)/ [0,7]:일요일, [1]:월, [2]:화, [3]:수, [4]:목, [5]:금, [6]:토/직접 sun, mon, tue, wed, thu, fri, sat으로 설정해도 된다.
+    + user-name: 사용자 이름
+    + command: 실행할 명령어
+- crontab: vi가 켜진다.
+- 사용 예
+~~~
+$ crontab -l
+~~~
+-> 설정된 crontab의 내용을 출력한다.
+~~~
+$ crontab -e
+~~~
+-> 설정된 crontab의 내용을 수정하거나 작성한다.
+~~~
+$ crontab -r
+~~~
+-> 설정된 crontab의 내용을 삭제한다.
+~~~
+$ crontab -e -u posein
+~~~
+-> 사용자 posein의 설정된 crontab의 내용을 수정하거나 작성한다.
+
+- crontab 설정예제
+~~~
+0 12 * * 1-5 /home/posein/work.sh
+~~~
+-> 월~금 오후 12시에 /home/posein/work.sh를 실행한다.
+~~~
+10 4 1 1-12/2 * /etc/check.sh
+~~~
+-> 1월부터 12월까지 2개월마다 매달 1일 4시 10분에 /etc/check.sh를 실행한다.
+~~~
+0 10 * * 1 cat /root/notice | mail -s "Notice" posein@naver.com
+~~~
+-> 월요일 10시마다 /root/notice 내용을 "Notice"라는 제목으로 posein@naver.com에 보낸다.
+~~~
+0 4 * * 1,3,5 find / -name '*.bak' -exec rm -rf {} \;
+~~~
+-> 월, 수, 금 4시에 '*.bak' 파일을 찾아 모두 삭제한다.
+---
+~~~
+매주 월요일 오전 10시에 점검 스크립트인 /etc/check.sh가 실행되도록 설정한다.
+~~~
+21. 다음 조건으로 cron을 이용해서 일정을 등록할 때 알맞은 것은?  
+    
+    ① 10 0 1 * * /etc/check.sh  
+    ② 0 10 1 * * /etc/check.sh  
+    ③ 10 0 * * 1 /etc/check.sh  
+    ❹ 0 10 * * 1 /etc/check.sh  
+---
