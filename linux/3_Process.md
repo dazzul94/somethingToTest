@@ -54,14 +54,14 @@
 ##### ＠ 시그널?
 - 특정 프로세스가 다른 프로세스에게 메세지를 보낼 때 사용
 - kill -l(시그널 목록)
-    + SIGHUP(HUP): Hangup의 약어. 접속이 끊겨서 데몬 환경 설정 파일을 변경시키고 재시작할 때 
-    + SIGINT(INT): 키보드로부터 오는 인터럽트 시그널. 실행 중지. Ctrl + C
-    + SIGQUIT(QUIT): 키보드로부터 오는 인터럽트 시그널. 실행 중지. Ctrl + \
-    + SIGKILL(KILL): 무조건 종료
-    + SIGTERM(TERM): Terminate(정상종료)
-    + SIGCONT(CONT): COntinue, Stop에 의해 멈춘 프로세스 다시 실행
-    + SIGSTOP(STOP): 정지 시그널
-    + SIGTSTP(TSTP): 실행 정지, 대기신호 Ctrl + z
+    + [1] SIGHUP(HUP): Hangup의 약어. 접속이 끊겨서 데몬 환경 설정 파일을 변경시키고 재시작할 때 
+    + [2] SIGINT(INT): 키보드로부터 오는 인터럽트 시그널. 실행 중지. Ctrl + C
+    + [3] SIGQUIT(QUIT): 키보드로부터 오는 인터럽트 시그널. 실행 중지. Ctrl + \
+    + [9] SIGKILL(KILL): 무조건 종료
+    + [15] SIGTERM(TERM): Terminate(정상종료)
+    + [18] SIGCONT(CONT): COntinue, Stop에 의해 멈춘 프로세스 다시 실행
+    + [19] SIGSTOP(STOP): 정지 시그널
+    + [20] SIGTSTP(TSTP): 실행 정지, 대기신호 Ctrl + z
 ---
 21. 다음 중 리눅스 시스템에서 사용하는 시그널 이름과 번호를 확인할 때 사용하는 명령으로 알맞은 것은?  
     ① signal		② signal -l   
@@ -182,6 +182,11 @@ $ pstree [option]
 ~~~
 $ top [option]
 ~~~
+---
+24. 다음 중 실행 중인 프로세스들의 CPU 사용률을 실시간으로 확인할 때 사용하는 명령으로 알맞은 것은?  
+    ❶ top		② nice  
+    ③ jobs		④ renice
+---
 - 주요 옵션
     + -d 갱신시간: 갱신시간 설정(초단위)
     + -p: 특정 PID값을 갖는 프로세스를 모니터링할때 사용한다.
@@ -201,3 +206,80 @@ $ top [option]
     + -p: PID값을 같이 보여준다.
 - top 실행상태에서의 명령
     + [SPACE]: 화면을 갱신한다.
+    + h,?: 도움말을 출력한다.
+    + k: kill 명령을 내린다. PID 값을 입력하면 종료 신호를 보낸다.
+    + i: Zombie, idle 프로세스의 출력을 on/off한다.
+    + n,#: 출력하는 프로세스의 수를 지정한다.
+    + q: top을 종료한다.
+    + r: Nice 값을 변경한다.
+    + s: 화면을 갱신하는 시간을 변경한다.
+    + F, f: 보여줄 항목을 추가하거나 삭제한다.
+    + O, o: 보여줄 항목의 순서를 바꿈
+    + l: op의 맨 윗줄(uptime)을 on/off한다.
+    + m: 메모리 관련된 항목을 on/off 한다.
+    + t: 프로세스와 CPU 항목을 on/off한다.
+    + c: Command line 옵션을 on/off한다.
+    + M: 프로세스의 RES 값으로 정렬한다.
+    + P: %CPU 값으로 정렬한다.
+    + T: Time값으로 정렬한다.
+    + W: 바꾼 설정을 저장한다.
+- 사용 예
+~~~
+$ top -d 2 -p 1222
+~~~
+PID 값이 1222인 프로세스를 2초 간격으로 관련 정보를 출력한다.
+
+##### ＠ kill
+프로세스에 특정한 시그널을 보내는 명령. 옵션 없이 실행하면 프로세스에 종료신호(SIGTERM:정상종료[15])를 보낸다.
+~~~
+# kill [option] [signal] [PID 또는 %Job_number]
+~~~
+---
+25. 다음 중 kill 명령 실행 시에 기본적으로 전송되는 시그널 번호로 알맞은 것은?  
+    ① 1			② 3  
+    ③ 9			❹ 15  
+-> 15번, SIGTERM, 정상종료
+---
+- 주요 옵션
+    + -l: 시그널의 종류를 출력한다.
+    + -s signal: 시그널의 이름을 지정하는 옵션
+- 사용 예
+~~~
+# kill -l
+~~~
+-> 시그널의 종류를 출력한다.
+~~~
+# kill 724
+~~~
+-> PID가 724인 프로세스에 기본시그널인 15번 시그널(SIGTERM)을 보낸다. 같은 명령은 'kill -15 724', 'kill -TERM 724', 'kill -s SIGTERM 724' 등이 있다.
+~~~
+# kill -9 756 757 758
+~~~
+-> PID가 756,757,758인 프로세스를 강제 종료한다. 'kill -KILL 756 757 758', 'kill -SIGKILL 756 757 758' 라고 해도 된다.
+~~~
+# kill -HUP 10118
+~~~
+-> pid가 10118인 프로세스를 재시작한다. 'kill -1 10118'과 같다.
+~~~
+# kill %2
+~~~
+-> 작업번호가 2인 프로세스를 종료시킨다.
+~~~
+# kill -s SIGTERM 1702
+~~~
+-> PID가 1702인 프로세스에 기본 종료 시그널인 TERM을 보내서 종료한다.
+---
+~~~
+[root@www ~] # userdel -r idhuser
+userdel: user ihduser is currently used vy process 3878
+[root@www ~]#
+~~~
+25. 다음과 같이 사용자 제거 작업이 실패하였다. 해당 작업 전에 실행해야할 명령으로 알맞은 것은?  
+    
+    ① kill 3878		② kill ihduser  
+    ❸ kill -9 3878	④ killall -9 3878
+---
+##### ＠ killall
+~~~
+# killall [option] 프로세스명
+~~~
