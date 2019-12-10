@@ -556,6 +556,10 @@ yum list updates
 39. 다음 중 totem 패키지를 설치하는 과정에서 질의 시 무조건 승낙하는 명령으로 알맞은 것은?  
     ① yum -i -y totem		② yum -f -y totem  
     ③ yum install -f totem		❹ yum install -y totem  
+
+41. 다음 중 yum 관련 작업 이력을 출력하는 명령으로 알맞은 것은?  
+    ① yum list		② yum check  
+    ③ yum check-list	❹ yum history  
 ---
 
 #### - dpkg 사용법
@@ -617,6 +621,13 @@ yum list updates
 ~~~
 -> mc 패키지에 대한 패키지 버전, 패키지 관리자 , 패키지에 대한 설명, 환경 설정 파일에 대한 정보를 출력한다.
 
+---
+37. 다음 중 cron 패키지를 환경 설정 파일을 포함해서 전부 제거할 때 사용하는 명령으로 알맞은 것은?  
+    ① dpkg -c cron	② dpkg -d cron  
+    ③ dpkg -r cron	❹ dpkg -P cron  
+-> 강력한 P(Purge)
+---
+ 
 #### - apt-get 사용법
 ##### ＠ apt-get 
 데비안 리눅스 배포판 yum과 유사하다. /etc/apt/sources.list 파일에 패키지 관련 정보를 관리한다.
