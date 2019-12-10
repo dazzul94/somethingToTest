@@ -421,10 +421,232 @@ $ rpm -Va
 $ rpm -V vsftpd
 ~~~
 -> vsfspd를 검사한다.
-
+~~~
 #### - yum
 
 ##### ＠ yum(Yellowdog Updater, Modefied)
 rpm기반 시스템에서 패키지를 손쉽게 설치해주고 자동으로 업데이트를 수행해준다. yum은 트웨어 저장소(repository)에 관련 패키지들을 모아주고 네트워크를 통해 의존성을 검사하여 설치 및 업데이트를 수행한다. APT와 유사하다.
 
 ##### ＠ yum 관련 파일 및 디렉터리
+- yum 환경설정파일: /etc/yum.conf
+- yum 설치 및 업데이트 위한 저장소 관련 파일: /etc/yum.repos.d
+    + 네트워크 작업용 저장소 파일: CentOS-Base.repo
+        * [base]: yum 패키지 서버의 기본 경로
+        * [updates]: 업데이트된 패키지를 위한 경로 설정
+        * [extras]: 추가 패키지 경로
+        * [centoplus]: 기능적 확장 패키지 경로
+        * [contrib]: CentOS 사용자들에 의해 제작된 패키지 경로
+    + 로컬의 CD-ROM, DVD-ROM 작업용 저장소 파일: CentOS-Media.repo
+- yum 작업 경로: /var/log/yum.log
+
+---
+35. 다음 중 yum 명령의 저장소 관련 파일들이 위치하는 디렉터리로 알맞은 것은?  
+    ① /etc/yum		② /etc/yum.d  
+    ③ /etc/yum.repos	❹ /etc/yum.repos.d  
+---
+
+##### ＠ yum 사용법
+- 사용법
+~~~
+# yum [option] [command] [패키지_파일명]
+~~~
+- 주요 옵션
+    + -y: 모든 질의에 'yes'라고 답한다.
+    + -v: 자세한 정보를 출력한다.(--verbose)
+- command
+    + list [항목]: 전체 패키지에 대한 정보를 출력한다.
+    + info [항목]: 패키지에 대한 정보를 출력한다.
+    + check-update: 업데이트가 필요한 패키지를 출력한다. 'yum list updates'와 같다.
+    + update [패키지명]: 패키지 업데이트
+    + install [패키지명]: 패키지 설치.의존성관련 패키지도 함께 설치해준다.
+    + search [문자열..]: 문자열이 포함된 패키지를 찾아준다.
+    + remove [패키지명]: 패키지를 삭제할때 사용
+    + grouplist: 패키지 그룹에 대한 정보 출력
+    + groupinfo 패키지 그룹명: 해당 패키지 정보 출력
+    + groupupdate 패키지 그룹명: 지정한 그룹의 패키지를 업데이트한다.
+    + groupinstall 패키지그룹명: 지정한 그룹의 패키지를 설치한다.
+    + groupremove 패키지그룹명: 지정한 그룹의 패키지를 삭제한다.
+    + whatprovides: 특정한 파일이나 기능과 관련된 패키지 정보를 검색한다.
+    + clean [값]: yum 관련해서 저장된 정보를 삭제할 때 사용한다.
+    + history: yum명령을 사용한 작업 이력 출력
+- 사용 예
+~~~
+# yum list
+~~~
+-> 전체 패키지에 대한 정보를 출력한다. 기본값이 'yum list all'
+~~~
+yum list installed
+~~~
+-> 설치된 패키지에 대한 정보를 출력
+~~~
+yum list updates
+~~~
+-> 업데이트가 필요한 패키지에 대한 정보를 출력
+~~~
+# yum info
+~~~
+-> 모든 패키지에 대한 정보를 출력한다.
+~~~
+# yum info telnet-server
+~~~
+-> telnet-server에 대한 정보를 출력한다.
+~~~
+# yum update
+~~~
+-> 설치되어 있는 전체 패키지를 업데이트한다.
+~~~
+# yum update gzip
+~~~
+-> gzip 패키지를 업데이트한다.
+~~~
+# yum install telnet-server
+~~~
+-> telnet-server 패키지를 설치한다. 의존성패키지도 자동설치
+~~~
+# yum search player music
+~~~
+-> player과 music이라는 문자열이 들어있는 패키지를 찾아준다.
+~~~
+# yum install -y rhythmbox
+~~~
+-> rhythmbox 설치시 질의할때 무조건 [y]를 선택한다.
+~~~
+# yum remove telnet-server
+~~~
+-> telnet-server 제한다.
+~~~
+# yum grouplist
+~~~
+-> 패키지 그룹별 설치 정보를 출력한다. 설치된 그룹은 Installed Groups에 표기되고, 설치되지 않은 그룹은 Availabe Groups에 표기된다.
+~~~
+# yum groupinfo 'High Availability'
+~~~
+-> High Availability라는 그룹과 연관된 패키지 정보를 보여준다.
+~~~
+# yum groupdupdate 'Print Server'
+~~~
+-> 'Print Server'그룹의 패키지를 업데이트한다.
+~~~
+# yum groupinstall 'CIFS file server'
+~~~
+-> 'CIFS file server' 그룹의 패키지를 설치한다.
+~~~
+# yum groupremove Eclipse
+~~~
+-> Eclipse 그룹에 속한 패키지를 삭제한다.
+~~~
+# yum wharprovides portmap
+~~~
+-> portmap과 관련 있는 패키지 정보를 출력한다.
+~~~
+# yum clean all
+~~~
+-> yum 관련 모든 정보를 삭제한다.
+~~~
+# yum history
+~~~
+-> yum 관련한 작업 이력을 출력한다.
+~~~
+# yumdownloader --destdir=/usr/local/src vsftpd
+~~~
+-> yum을 이용해서 rpm 패키지를 설치할 수있다.  
+-> vsftpd 관련 rpm 파일을 /usr/local/src에 설치한다.
+
+---
+39. 다음 중 totem 패키지를 설치하는 과정에서 질의 시 무조건 승낙하는 명령으로 알맞은 것은?  
+    ① yum -i -y totem		② yum -f -y totem  
+    ③ yum install -f totem		❹ yum install -y totem  
+---
+
+#### - dpkg 사용법
+##### ＠ dpkg 사용법
+- 사용법
+~~~
+# dpkg [option] [패키지명] [패키지파일명]
+~~~
+- 주요 옵션
+    + -i 패키지파일명: 패키지를 설치할 때 사용한다(--install)
+    + -R 디렉터리명: -i와 같이 사용하여 지정한 디렉터리 안에 있는 패키지를 설치할 때 사용한다.
+    + -l: 설치되어 있는 패키지를 출력한다.(--list)
+    + -l 패키지파일명: 패키지 파일에 대한 정보를 출력한다.(--info)
+    + -c 패키지파일명: 패키지 파일에 포함된 파일 정보를 출력한다.(--contents)
+    + -L 패키지명: 패키지가 설치한 파일 목록을 출력한다.(--listfiles)
+    + -r 패키지명: 패키지 제거. 환경설정파일은 남는다(--remove)
+    + -P 패키지명: 환경설정 파일까지 전부 제거한다.(--purge)
+    + -S 파일명: 해당 파일을 설치한 패키지 이름을 출력한다.(--search)
+    + -C: 완전히 설치되지 않은 패키지를 검사한다.(--audit)
+    + --unpack 패키지파일명: 환경설정하지않고 패키지 풀기만한다.
+    + --configure 패키지명: --unpack옵션으로 풀린 패키지를 환경설정한다.
+    + -a: --configure시 패키지명 대신에 이 옵션을 사용하면 언팩된 패키지들에 대한 환경설정을 한다(--pending)
+    + -s 패키지명: 패키지에 대한 상태를 출력한다.(--status)
+- 사용 예
+~~~
+# dpkg -i /usr/debian/stable/binary-i386/admin/vim_4.5.3.deb
+~~~
+-> 지정한 패키지를 설치한다.
+~~~
+# dpkg -i -R /usr/debian/stable/binary-i386/admin
+~~~
+-> 지정한 디렉터리 안에 있는 모든 패키지를 설치한다.
+~~~
+# dpkg -L vim
+~~~
+-> vim 패키지에서 설치된 파일을 목록으로 보여준다. 'dpkg --listfiles vim'
+~~~
+# dpkg -l "*vi*"
+~~~
+-> vi라는 패턴과 일치하는 패키지들을 출력한다. 'dpkg --list '*vi*'
+~~~
+# dpkg --unpack vim_4.5-3.deb
+~~~
+-> 해당 패키지를 풀기만 한다.
+~~~
+# dpkg --configure vim
+~~~
+-> --unpack 옵션에 의해 풀린 패키지의 환경 설정을 한다.
+~~~
+# dpkg -r cron
+~~~
+-> cron 패키지를 제거하지만 환경 설정 파일은 제거되지 않는다.
+~~~
+# dpkg -P cron
+~~~
+-> cron 패키지를 환경설정 파일까지 모두 삭제한다.
+~~~
+# dpkg -s mc
+~~~
+-> mc 패키지에 대한 패키지 버전, 패키지 관리자 , 패키지에 대한 설명, 환경 설정 파일에 대한 정보를 출력한다.
+
+#### - apt-get 사용법
+##### ＠ apt-get 
+데비안 리눅스 배포판 yum과 유사하다. /etc/apt/sources.list 파일에 패키지 관련 정보를 관리한다.
+~~~
+apt-get [option] [command] [패키지명]
+~~~
+- 주요 옵션
+    + -y: 모든 질의에 'yes'라고 답한다.(--yes, --assume-yes)
+    + --purge: remove 명령을 수행할 때 환경설정 파일까지 삭제한다.
+- command 
+    + update: 패키지 목록을 갱신(관련 정보는 /etc/apt/sources.list에서 가져온다)
+    + upgrade: 모든 패키지를 최신 버전으로 업그레이드 (update후에)
+    + install 패키지명: 패키지 설치(/var/cache/apt/archive에 .deb파일 생성)
+    + remove 패키지명: 패키지를 삭제한다.
+    + clean: /var/cache/apt/archive에 생성된 파일을 삭제한다.
+-사용 예
+~~~
+# apt-get update
+~~~
+-> 패키지 목록을 갱신한다.
+~~~
+# apt-get install nautilus
+~~~
+-> 패키지를 설치한다.
+~~~
+# apt-get remove nautilus
+~~~
+-> 패키지를 삭제한다. 환경설정 파일은 남겨둔다.
+~~~
+# apt-get clean
+~~~
+-> /var/cache/apt/archive에 있는 파일 모두 삭제
+
