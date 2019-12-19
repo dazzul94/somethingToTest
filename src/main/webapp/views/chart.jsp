@@ -37,39 +37,12 @@
 	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/jquery.jqGrid.min.js?<%=ts%>"></script>
 	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/jquery-ui.js?<%=ts%>"></script>
 	
-	<script type="text/javascript" src="<%=contextPath%>/js/home.js?<%=ts%>"></script>
-	<style>
-	    table {
-	        font-size:90%
-	    }
-	</style>
+	<script type="text/javascript" src="<%=contextPath%>/js/highCharts/highcharts.js?<%=ts%>"></script>
+	
+	<script type="text/javascript" src="<%=contextPath%>/js/chart.js?<%=ts%>"></script>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
-
-<P>  The time on the server is ${serverTime}. </P>
-	<div id="row">
-		<div>
-			<input type="text" id="fromDate">
-			<input type="text" id="toDate">
-			<select id="selectType">
-				<option value="">전체</option>
-				<option value="A">A</option>
-				<option value="B">B</option>
-				<option value="C">C</option>
-				<option value="D">D</option>
-			</select>
-			<input type="text" id="searchVal" placeholder="검색어를 입력해주세요.">
-			<span><a id="btn_search" href="#">조회</a></span>
-			<span><a id="btn_excel" href="#">엑셀다운로드</a></span>
-		</div>
-		<div>
-			<table id="jqGrid"></table>
-			<div id="jqGridPager"></div>
-		</div>
-	</div>
+<div id="container"></div>
 </body>
 </html>
 
