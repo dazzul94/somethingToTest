@@ -48,4 +48,10 @@ public class HomeController {
 		return "chart";
 	}
 	
+	// d3_chart
+	@RequestMapping(value = "/d3_chart", method = RequestMethod.GET)
+	public String d3_chart(Model model) {
+		return "d3_chart";
+	}
+	
 }
