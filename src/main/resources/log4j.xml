@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.kds.myexcel">
+	<logger name="com.kds.sth">
 		<level value="info" />
 	</logger>
 	

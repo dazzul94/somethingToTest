@@ -1,4 +1,4 @@
-package com.kds.myexcel;
+package com.kds.sth;
 
 import java.text.DateFormat;
 import java.util.Date;
