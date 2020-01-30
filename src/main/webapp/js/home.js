@@ -2,9 +2,9 @@ var call_host = $(location).attr('origin')
 var context_path = '';
 
 $(document).ready(function() {
-	mainHandler.init();
-	initInputArea.init();
-	btnEventHandler.init();
+	mainHandler.init();		// 메인 핸들러의 역할..?
+	initInputArea.init();	// 인풋 초기화..
+	btnEventHandler.init();	// 버튼이벤트바인딩..
 });
 
 var mainHandler = {

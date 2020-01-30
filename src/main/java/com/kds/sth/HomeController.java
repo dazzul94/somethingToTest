@@ -53,10 +53,16 @@ public class HomeController {
 	public String d3_chart(Model model) {
 		return "d3_chart";
 	}
+	
 	// d3_bubble_chart
 	@RequestMapping(value = "/d3_bubble_chart", method = RequestMethod.GET)
 	public String d3_bubble_chart(Model model) {
 		return "d3_bubble_chart";
 	}
 	
+	// agGrid
+	@RequestMapping(value = "/agGrid_01", method = RequestMethod.GET)
+	public String agGrid_01(Model model) {
+		return "agGrid_01";
+	}
 }
