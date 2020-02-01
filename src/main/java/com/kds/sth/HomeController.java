@@ -42,10 +42,16 @@ public class HomeController {
         return result;
     }*/
 
-	// chart
-	@RequestMapping(value = "/chart", method = RequestMethod.GET)
-	public String chart(Model model) {
-		return "chart";
+	// highChart_01
+	@RequestMapping(value = "/highChart_01", method = RequestMethod.GET)
+	public String highChart_01(Model model) {
+		return "highChart_01";
+	}
+	
+	// highChart_02
+	@RequestMapping(value = "/highChart_02", method = RequestMethod.GET)
+	public String highChart_02(Model model) {
+		return "highChart_02";
 	}
 	
 	// d3_chart

@@ -32,6 +32,8 @@
 	<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/jqGrid/ui.jqgrid-bootstrap4.css?<%=ts%>"/>
 	<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/jqGrid/ui.jqgrid-bootstrap-ui.css?<%=ts%>"/>
 	
+	<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/d3_bubble_chart.css?<%=ts%>"/>
+	
 	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/jquery-1.11.0.min.js?<%=ts%>"></script>
 	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/grid.locale-kr.js?<%=ts%>"></script>
 	<script type="text/javascript" src="<%=contextPath%>/js/jqGrid/jquery.jqGrid.min.js?<%=ts%>"></script>
@@ -39,10 +41,21 @@
 	
 	<script type="text/javascript" src="<%=contextPath%>/js/highCharts/highcharts.js?<%=ts%>"></script>
 	
-	<script type="text/javascript" src="<%=contextPath%>/js/chart.js?<%=ts%>"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+	<script type="text/javascript" src="<%=contextPath%>/js/highChart_02.js?<%=ts%>"></script>
 </head>
 <body>
-<div id="container"></div>
+<figure class="highcharts-figure">
+    <div id="container"></div>
+    <p class="highcharts-description">
+        Chart showing how a line series can be used to show a computed
+        regression line for a dataset. The source data for the regression line
+        is visualized as a scatter series.
+    </p>
+</figure>
 </body>
 </html>
 
