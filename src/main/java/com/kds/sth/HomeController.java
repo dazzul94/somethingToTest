@@ -71,4 +71,10 @@ public class HomeController {
 	public String agGrid_01(Model model) {
 		return "agGrid_01";
 	}
+	
+	// summerNote
+	@RequestMapping(value = "/summerNote", method = RequestMethod.GET)
+	public String summerNote(Model model) {
+		return "summerNote";
+	}
 }
